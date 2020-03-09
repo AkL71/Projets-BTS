@@ -1,0 +1,59 @@
+		 private void dtgplongée_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Plongée PlongéeSelected = (Plongée)dtgPlongée.SelectedItem;
+            if (PlongéeSelected == null)
+                return;
+
+            txtIdPlongée.Text = Convert.ToString(PlongéeSelected.idPlongée);
+            txtIdPalenque.Text = Convert.ToString(plongéeSelected.idPalenque);
+            txtDateDebut.Text = Convert.ToString(plongéeSelected.dateDebutPlongée);
+            txtDateFin.Text = Convert.ToString(plongéeSelected.dateFinPlongée);
+            txtSiteplongée.Text = Convert.ToString(plongéeSelected.sitePlongée);
+            txtNomPersonnel.Text = Convert.ToString(plongéeSelected.nomPersonnel);
+ 			txtNomClient.Text = Convert.ToString(plongéeSelected.nomClient);
+
+
+        }
+
+
+
+	    private void btnAjouterPlongée_Click(object sender, RoutedEventArgs e)
+        {
+            bdd.InsertPlongée(txtIdPlongée.Text, txtIdPalenque.Text, txtDateDebut.Text, txtDateFin.Text, txtSitePlongée txtNomPersonnel.Text, txtNomClient.Text);
+
+            cPlongée.Clear();
+            cPlongée = bdd.getPlongées();
+            dtgPlongée.ItemsSource = cPlongée;
+        }
+
+        private void btnSupprimerPlongée_Click(object sender, RoutedEventArgs e)
+        {
+            bdd.DeletePlongée(((Plongée)dtgPlongée.SelectedItem).idPlongée);
+            cPlongée.Remove((Plongée)dtgPlongée.SelectedItem);
+            dtgPlongée.SelectedIndex = 0;
+            dtgPlongée.Items.Refresh();
+        }
+
+        private void btnModifierPlongée_Click(object sender, RoutedEventArgs e)
+        {
+            int indice = cPlongée.IndexOf((Plongée)dtgPlongée.SelectedItem);
+
+            cPlongée.ElementAt(indice).idPlongée = txtIdPlongée.Text;
+            cPlongée.ElementAt(indice).idPalenque = txtIdPalenque.Text;
+            cPlongée.ElementAt(indice).dateDebutPlongée = txtDateDebut.Text;
+            cPlongée.ElementAt(indice).dateFinPlongée = txtFinPlongée.Text;
+            cPlongée.ElementAt(indice).sitePlongée = txtSitePlongée.Text;
+            cPlongée.ElementAt(indice).nomPersonnel = txtNomPersonnel.Text;
+            cPlongée.ElementAt(indice).nomClient = txtNomClient.Text;
+            
+            
+        
+            bdd.UpdatePlongée(((Plongée)dtgPlongée.SelectedItem).idPlongée, ((Plongée)dtgPlongée.SelectedItem).dateDebutplongée, ((Plongée)dtgPlongée.SelectedItem).dateFinPlongée, ((Plongée)dtgPlongée.SelectedItem).nomplongée, ((Plongée)dtgPlongée.SelectedItem).nomMoniteur);
+            dtgPlongée.Items.Refresh();
+
+        }
+
+    }
+
+
+    
